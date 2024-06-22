@@ -1,47 +1,88 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <title>내 홈페이지</title>
-    <style>
-      /* p{
-        color: green;
-      } */
-      h4{
-        color: red;
-      }
-    </style>
-    <link href="css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <h1>내 홈페이지</h1>
-    <hr color="purple" size="10">
-    <h2 class="cute-font-regular">여기에 내 홈페이지가 제작될 예정</h2>
-    <h3>잘 만들어 봐요</h3>
-    <h4>잘 만들어 봐요</h4>
-    <a href="login.html">로그</a>
-    <hr size="5">
-    <p>문단은 여기</p>
-    <p>이렇게 문단</p>
-    <!-- <p style="color: red;">이렇게 문단</p> -->
-    <hr>
-    <div>
-    여기에 입력하고 <span>엔터키</span>로 다음줄<br>
-    하고 글을 쓰는중...<br>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dd</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */ /* 스크롤 제한을 해제합니다. */
+  }
 
-    <span class="space">띄어쓰기</span>         앞에 많이 함<br>
-    <span class="space">뛰어쓰기</span> 한개<br>
-    </div>
-    <div>
-    많이 <span class="space">띄어쓰기</span> 할려면 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="aa">5</span>번띄움<br>
-    <strong>인라인 텍스트라 한 줄을 독차지 하지 않고</strong>
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 화면 전체 높이 */
+  }
+
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .first-image {
+    position: absolute;
+    top: 50%; /* 동영상의 중간에 배치 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* 동영상 위에 겹치도록 */
+    max-width: 50%; /* 이미지 최대 너비 */
+    max-height: 50%; /* 이미지 최대 높이 */
+  }
+
+  .second-image {
+    position: absolute;
+    bottom: -720px; /* 화면 하단에 10px 간격으로 배치 */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width:  100%; /* 이미지 최대 너비 */
+    max-height: 100%; 이미지 최대 높이
+  }
+  .next-button {
+    position: absolute;
+    bottom: -700px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 10; /* 버튼이 위에 나타나도록 z-index 설정 */
+  }
+
+  .next-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .next-button::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    transform: rotate(45deg);
+  }
+</style>
+</head>
+<body>
+  <div class="video-container">
+    <video autoplay loop muted>
+      <source src="mp4/Maserati advertisement.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <img src="img/Maserati logo.png" alt="First Image" class="first-image">
+    <img src="img/Maserati Ghibli.png" alt="Second Image" class="second-image">
+    <a href="index2.html" class="next-button"></a>
   </div>
-  <a href="https://www.naver.com" target="_blank">네이버</a><br><br>
-  <a href="alert.html">헬로월드 알림</a><br><br>
-  <a href="https://search.naver.com/search.naver?ssc=tab.image.all&where=image&sm=tab_jum&query=%EB%8F%84%EB%9D%BC%EC%97%90%EB%AA%BD" target="_blank">
-    <img src="img/Dora.png" width="200">
-  </a>
-  <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTExMTVfMjE4/MDAxNjM2OTEzNDAwNjQ4.A3BnPI2fiWWa2wtcM9xF5BBDSjByfeVOe2IWkmNEkaEg.3F0JSZoi5s-IhM4Imv5nug1B3-T73Qt0Yq8WY5zincAg.JPEG.amoayhwh/Doraemon02.jpg?type=w400" width="200"><br>
-  <a href="page1.html">다음페이지</a>
-  </body>
+</body>
 </html>
