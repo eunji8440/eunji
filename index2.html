@@ -24,22 +24,33 @@
     }
 
     .control-button {
+    position: absolute;
     margin-top: -600px;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
+    left: 40px;
     width: 50px;
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 100;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-  }    
+    transition: background-color 0.3s ease;
+    z-index: 10;
+  }
+
+  .control-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .control-button:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-bottom: 2px solid white;
+    border-left: 2px solid white;
+    transform: rotate(45deg);
+  }
   </style>
 </head>
 <body>
