@@ -8,13 +8,12 @@
   body, html {
     margin: 0;
     padding: 0;
-    /* overflow: hidden; */ /* 스크롤 제한을 해제합니다. */
   }
 
   .video-container {
     position: relative;
     width: 100%;
-    height: 100vh; /* 화면 전체 높이 */
+    height: 100vh;
   }
 
   video {
@@ -28,20 +27,20 @@
 
   .first-image {
     position: absolute;
-    top: 50%; /* 동영상의 중간에 배치 */
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1; /* 동영상 위에 겹치도록 */
-    max-width: 50%; /* 이미지 최대 너비 */
-    max-height: 50%; /* 이미지 최대 높이 */
+    z-index: 1;
+    max-width: 50%;
+    max-height: 50%;
   }
 
   .second-image {
     position: absolute;
-    bottom: -720px; /* 화면 하단에 10px 간격으로 배치 */
+    bottom: -720px;
     left: 50%;
     transform: translateX(-50%);
-    max-width:  100%; /* 이미지 최대 너비 */
+    max-width:  100%;
     max-height: 100%; 이미지 최대 높이
   }
   .next-button {
@@ -57,7 +56,7 @@
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    z-index: 10; /* 버튼이 위에 나타나도록 z-index 설정 */
+    z-index: 10;
   }
 
   .next-button:hover {
@@ -78,7 +77,6 @@
   <div class="video-container">
     <video autoplay loop muted>
       <source src="mp4/Maserati advertisement.mp4" type="video/mp4">
-      Your browser does not support the video tag.
     </video>
     <img src="img/Maserati logo.png" alt="First Image" class="first-image">
     <img src="img/Maserati Ghibli.png" alt="Second Image" class="second-image">
