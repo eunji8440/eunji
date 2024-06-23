@@ -1,16 +1,47 @@
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ㅏ</title>
+<title>Maserati</title>
 <style>
+
+.scroll-to-top {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 60px;
+  text-align: center;
+  background-color: #949494;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  text-decoration: none;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+
+.scroll-to-top:hover {
+  background-color: #0056b3;
+}
+
+.arrow {
+  display: inline-block;
+}
+
   body, html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
   }
 
+
+  
   .video-container {
     position: relative;
     width: 100%;
@@ -38,7 +69,7 @@
 
   .second-image {
     position: absolute;
-    bottom: -1270px;
+    bottom: -1500px;
     left: 50%;
     transform: translateX(-50%);
     max-width: 100%;
@@ -47,7 +78,7 @@
 
   .next-button {
     position: absolute;
-    bottom: -650px;
+    bottom: -950px;
     right: 50px;
     width: 50px;
     height: 50px;
@@ -76,7 +107,7 @@
 
   .text-container {
     position: absolute;
-    margin-top: 950px;
+    margin-top: 1050px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -115,7 +146,7 @@
   .image-container {
     position: relative;
     margin: 30px;
-    max-width: 230px;
+    max-width: 250px;
     text-align: center;
   }
 
@@ -134,7 +165,7 @@
 
   .image-gallery {
     position: absolute;
-    bottom: -450px;
+    bottom: -600px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -144,7 +175,7 @@
   }
 
   .bottom-image {
-    margin-top: 1400px;
+    margin-top: 1600px;
     display: block;
     width: 100%;
     max-width: 100%;
@@ -167,7 +198,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
-    margin-top: 80px;
+    margin-top: 150px;
   }
 
   .thumbnail {
@@ -197,7 +228,7 @@
 
   .thumbnail-container, .vertical-images {
   position: relative;
-  z-index: 1; /* 다른 요소들보다 뒤에 위치 */
+  z-index: 1; 
 }
 
 .thumbnail-container::before {
@@ -208,15 +239,47 @@
   left: 0;
   width: 100%;
   height: 400%;
-  background-image: url('img/gray.png'); /* 배경 이미지 경로 설정 */
+  background-image: url('img/gray.png'); 
   background-size: cover;
   background-position: center;
-  z-index: -1; /* 배경 이미지는 요소들 뒤에 위치 */
+  z-index: -1; 
 }
 
+.slide-container {
+      margin-top: 100px;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .slide-image {
+      position: absolute;
+      width: 100%;
+      height: 80%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide-image.active {
+      opacity: 1;
+    }
+
+    .footer {
+      margin: 0 auto; 
+      margin-top: 30px;
+      max-width: 100%;
+    }
 </style>
 </head>
 <body>
+  <link rel="shortcut icon" href="img/logo/logo1.png/favicon.ico" />
+  <a href="#" class="scroll-to-top">
+    <span class="arrow">&#8593;</span>
+  </a>
   <div class="video-container">
     <video autoplay loop muted>
       <source src="mp4/Maserati advertisement.mp4" type="video/mp4">
@@ -325,6 +388,7 @@
   <img src="img/PROMOTION.png" alt="Bottom Image" class="bottom-image">
   <img src="img/NEWS.png" alt="Bottom Image2" class="bottom-image2">
 
+
   <div class="thumbnail-container">
     <img class="thumbnail" src="img/logo/logo1.png" onclick="showVerticalImage(1)" alt="Thumbnail 1">
     <img class="thumbnail" src="img/logo/logo2.png" onclick="showVerticalImage(2)" alt="Thumbnail 2">
@@ -344,6 +408,25 @@
     <img src="img/color/color7.png" alt="Vertical Image 7">
   </div>
 
+  <div class="slide-container">
+    <img class="slide-image active" src="img/history/history1.png" alt="Image 1">
+    <img class="slide-image" src="img/history/history2.png" alt="Image 2">
+    <img class="slide-image" src="img/history/history3.png" alt="Image 3">
+    <img class="slide-image" src="img/history/history4.png" alt="Image 4">
+    <img class="slide-image" src="img/history/history5.png" alt="Image 5">
+    <img class="slide-image" src="img/history/history6.png" alt="Image 6">
+    <img class="slide-image" src="img/history/history7.png" alt="Image 7">
+    <img class="slide-image" src="img/history/history8.png" alt="Image 8">
+    <img class="slide-image" src="img/history/history9.png" alt="Image 9">
+    <img class="slide-image" src="img/history/history10.png" alt="Image 10">
+    <img class="slide-image" src="img/history/history11.png" alt="Image 11">
+    <img class="slide-image" src="img/history/history12.png" alt="Image 11">
+  </div>
+
+  <div class="footer">
+    <img src="img/footer.png" class="footer">
+  </div>
+  
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -382,6 +465,20 @@
       document.getElementById('verticalImages').children[index - 1].style.display = 'block';
       currentVerticalImageIndex = index - 1;
     }
+    const slideImages = document.querySelectorAll('.slide-image');
+    let currentIndex = 0;
+
+    function showNextSlide() {
+      slideImages[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slideImages.length;
+      slideImages[currentIndex].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 3000); 
+
   </script>
 </body>
 </html>
+
+
+
