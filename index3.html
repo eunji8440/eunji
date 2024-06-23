@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ㅜㅜ</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .slideshow {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="slideshow">
+  <img src="img/Levante/png/Levante1.png" class="slide active">
+  <img src="img/history/history2.png" class="slide">
+  <img src="img/history/history3.png" class="slide">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // 자동 슬라이드 쇼 설정
+    var slides = $(".slide");
+    var slideCount = slides.length;
+    var currentSlide = 0;
+
+    function showNextSlide() {
+      var nextSlide = (currentSlide + 1) % slideCount;
+      slides.eq(currentSlide).removeClass("active");
+      slides.eq(nextSlide).addClass("active");
+      currentSlide = nextSlide;
+    }
+
+    setInterval(showNextSlide, 3000); // 이미지 전환 간격 (ms)
+  });
+</script>
+
+</body>
+</html>

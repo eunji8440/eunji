@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>휴...</title>
+<title>ㅏ</title>
 <style>
   body, html {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
   }
 
   .video-container {
@@ -37,12 +38,13 @@
 
   .second-image {
     position: absolute;
-    bottom: -720px;
+    bottom: -1270px;
     left: 50%;
     transform: translateX(-50%);
-    max-width:  100%;
-    max-height: 100%; 이미지 최대 높이
+    max-width: 100%;
+    max-height: 100%;
   }
+
   .next-button {
     position: absolute;
     bottom: -650px;
@@ -71,6 +73,147 @@
     border-right: 2px solid white;
     transform: rotate(45deg);
   }
+
+  .text-container {
+    position: absolute;
+    margin-top: 950px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .text-container div {
+    margin: 0 20px;
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .text-container div.active {
+    color: blue;
+    font-weight: bold;
+  }
+
+  .text-container .model-title {
+    font-weight: bold;
+    font-size: 40px;
+    pointer-events: none;
+  }
+
+  .text-container div:hover {
+    text-decoration: underline;
+  }
+
+  .model-title:hover {
+    text-decoration: none;
+  }
+
+  .image-container {
+    position: relative;
+    margin: 30px;
+    max-width: 230px;
+    text-align: center;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .image-container .caption {
+    font-size: 18px;
+    color: #313131;
+    margin-top: 30px;
+  }
+
+  .image-gallery {
+    position: absolute;
+    bottom: -450px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 5;
+  }
+
+  .bottom-image {
+    margin-top: 1400px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .bottom-image2 {
+    margin-top: 40px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .thumbnail-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    margin-top: 80px;
+  }
+
+  .thumbnail {
+    width: 80px;
+    height: auto;
+    margin: 0 20px;
+    cursor: pointer;
+  }
+
+  .vertical-images {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
+
+  .vertical-images img {
+    max-width: 1000px;
+    height: auto;
+    margin: 5px;
+    display: none;
+  }
+
+  .vertical-images img:first-child {
+    display: block;
+  }
+
+  .thumbnail-container, .vertical-images {
+  position: relative;
+  z-index: 1; /* 다른 요소들보다 뒤에 위치 */
+}
+
+.thumbnail-container::before {
+  margin-top: -30px;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400%;
+  background-image: url('img/gray.png'); /* 배경 이미지 경로 설정 */
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* 배경 이미지는 요소들 뒤에 위치 */
+}
+
 </style>
 </head>
 <body>
@@ -81,6 +224,164 @@
     <img src="img/Maserati logo.png" alt="First Image" class="first-image">
     <img src="img/Maserati Ghibli.png" alt="Second Image" class="second-image">
     <a href="index2.html" class="next-button"></a>
+    <div class="text-container">
+      <div class="model-title">Model</div>
+      <div onclick="showImages('Ghibli')" class="active">Ghibli</div>
+      <div onclick="showImages('Quattroporte')">Quattroporte</div>
+      <div onclick="showImages('Levante')">Levante</div>
+      <div onclick="showImages('GranTurismo')">GranTurismo</div>
+      <div onclick="showImages('Grecale')">Grecale</div>
+      <div onclick="showImages('MC20')">MC20</div>
+      <div onclick="showImages('MC20Cielo')">MC20Cielo</div>
+    </div>
+    <div class="image-gallery" id="image-gallery">
+      <!-- Images for Ghibli -->
+      <div class="image-container Ghibli">
+        <img src="img/Ghibli/Ghibli1.png" alt="Ghibli image 1">
+        <div class="caption">Ghibli GT Hybrid</div>
+      </div>
+      <div class="image-container Ghibli">
+        <img src="img/Ghibli/Ghibli2.png" alt="Ghibli image 2">
+        <div class="caption">Ghibli Modena</div>
+      </div>
+      <div class="image-container Ghibli">
+        <img src="img/Ghibli/Ghibli3.png" alt="Ghibli image 3">
+        <div class="caption">Ghibli Modena S Q4</div>
+      </div>
+      <div class="image-container Ghibli">
+        <img src="img/Ghibli/Ghibli4.png" alt="Ghibli image 4">
+        <div class="caption">Ghibli Trofeo</div>
+      </div>
+
+      <!-- Images for Quattroporte -->
+      <div class="image-container Quattroporte">
+        <img src="img/Quattroporte/Quattroporte1.png" alt="Quattroporte image 1">
+        <div class="caption">Quattroporte GT</div>
+      </div>
+      <div class="image-container Quattroporte">
+        <img src="img/Quattroporte/Quattroporte2.png" alt="Quattroporte image 2">
+        <div class="caption">Quattroporte Modena Q4</div>
+      </div>
+      <div class="image-container Quattroporte">
+        <img src="img/Quattroporte/Quattroporte3.png" alt="Quattroporte image 3">
+        <div class="caption">Quattroporte Trofeo</div>
+      </div>
+
+      <!-- Images for Levante -->
+      <div class="image-container Levante">
+        <img src="img/Levante/png/Levante1.png" alt="Levante image 1">
+        <div class="caption">Levante GT Hybrid</div>
+      </div>
+      <div class="image-container Levante">
+        <img src="img/Levante/png/Levante2.png" alt="Levante image 2">
+        <div class="caption">Levante Modena</div>
+      </div>
+      <div class="image-container Levante">
+        <img src="img/Levante/png/Levante3.png" alt="Levante image 3">
+        <div class="caption">Levante Modena So</div>
+      </div>
+      <div class="image-container Levante">
+        <img src="img/Levante/png/Levante4.png" alt="Levante image 4">
+        <div class="caption">Levante Trofeo</div>
+      </div>
+
+      <!-- Images for GranTurismo -->
+      <div class="image-container GranTurismo">
+        <img src="img/GranTurismo/png/GranTurismo1.png" alt="GranTurismo image 1">
+        <div class="caption">GranTurismo Modena</div>
+      </div>
+      <div class="image-container GranTurismo">
+        <img src="img/GranTurismo/png/GranTurismo2.png" alt="GranTurismo image 2">
+        <div class="caption">GranTurismo Trofeo</div>
+      </div>
+
+      <!-- Images for Grecale -->
+      <div class="image-container Grecale">
+        <img src="img/Grecale/png/Grecale1.png" alt="Grecale image 1">
+        <div class="caption">Grecale GT</div>
+      </div>
+      <div class="image-container Grecale">
+        <img src="img/Grecale/png/Grecale2.png" alt="Grecale image 2">
+        <div class="caption">Grecale Modena</div>
+      </div>
+      <div class="image-container Grecale">
+        <img src="img/Grecale/png/Grecale3.png" alt="Grecale image 3">
+        <div class="caption">Grecale Trofeo</div>
+      </div>
+
+      <!-- Images for MC20 -->
+      <div class="image-container MC20">
+        <img src="img/MC20/png/MC20.png" alt="MC20 image">
+        <div class="caption">MC20</div>
+      </div>
+
+      <!-- Images for MC20 Cielo -->
+      <div class="image-container MC20Cielo">
+        <img src="img/MC20Cielo/png/MC20Cielo.png" alt="MC20Cielo image">
+        <div class="caption">MC20Cielo</div>
+      </div>
+    </div>
   </div>
+  <img src="img/PROMOTION.png" alt="Bottom Image" class="bottom-image">
+  <img src="img/NEWS.png" alt="Bottom Image2" class="bottom-image2">
+
+  <div class="thumbnail-container">
+    <img class="thumbnail" src="img/logo/logo1.png" onclick="showVerticalImage(1)" alt="Thumbnail 1">
+    <img class="thumbnail" src="img/logo/logo2.png" onclick="showVerticalImage(2)" alt="Thumbnail 2">
+    <img class="thumbnail" src="img/logo/logo3.png" onclick="showVerticalImage(3)" alt="Thumbnail 3">
+    <img class="thumbnail" src="img/logo/logo4.png" onclick="showVerticalImage(4)" alt="Thumbnail 4">
+    <img class="thumbnail" src="img/logo/logo5.png" onclick="showVerticalImage(5)" alt="Thumbnail 5">
+    <img class="thumbnail" src="img/logo/logo6.png" onclick="showVerticalImage(6)" alt="Thumbnail 6">
+    <img class="thumbnail" src="img/logo/logo7.png" onclick="showVerticalImage(7)" alt="Thumbnail 7">
+  </div>
+  <div class="vertical-images" id="verticalImages">
+    <img src="img/color/color1.png" alt="Vertical Image 1">
+    <img src="img/color/color2.png" alt="Vertical Image 2">
+    <img src="img/color/color3.png" alt="Vertical Image 3">
+    <img src="img/color/color4.png" alt="Vertical Image 4">
+    <img src="img/color/color5.png" alt="Vertical Image 5">
+    <img src="img/color/color6.png" alt="Vertical Image 6">
+    <img src="img/color/color7.png" alt="Vertical Image 7">
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      showImages('Ghibli');
+    });
+
+    function showImages(model) {
+      const allImages = document.querySelectorAll('.image-gallery .image-container');
+      allImages.forEach(container => container.style.display = 'none');
+
+      const imagesToShow = document.querySelectorAll(`.image-gallery .${model}`);
+      imagesToShow.forEach(container => container.style.display = 'block');
+
+      const allModelTexts = document.querySelectorAll('.text-container div');
+      allModelTexts.forEach(text => {
+        text.classList.remove('active');
+      });
+      const selectedModelText = document.querySelector(`.text-container div[data-model="${model}"]`);
+      if (selectedModelText) {
+        selectedModelText.classList.add('active');
+      }
+
+      if (model === 'MC20 Cielo') {
+        const mc20Images = document.querySelectorAll('.image-gallery .MC20');
+        mc20Images.forEach(image => image.style.display = 'none');
+      }
+    }
+
+    let currentVerticalImageIndex = 0;
+
+    function showVerticalImage(index) {
+      if (currentVerticalImageIndex !== -1) {
+        document.getElementById('verticalImages').children[currentVerticalImageIndex].style.display = 'none';
+      }
+
+      document.getElementById('verticalImages').children[index - 1].style.display = 'block';
+      currentVerticalImageIndex = index - 1;
+    }
+  </script>
 </body>
 </html>
