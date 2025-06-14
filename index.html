@@ -1,484 +1,1307 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maserati</title>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EUNJI'S WEB PORTFOLIO</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #a97bd8 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(-45deg, #ee77c3, #57f5e3, #667eea, #764ba2, #ff6b6b, #4ecdc4);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
 
-.scroll-to-top {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  line-height: 60px;
-  text-align: center;
-  background-color: #949494;
-  color: rgb(0, 0, 0);
-  font-size: 30px;
-  text-decoration: none;
-  border-radius: 50%;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  transition: background-color 0.3s;
-  z-index: 10;
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .skill-icon {
+            transition: transform 0.3s ease;
+        }
+        .skill-icon:hover {
+            transform: scale(1.1);
+        }
+        .portfolio-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        /* Skills infinite scroll animation - 개선된 반복 */
+        .skills-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .skills-scroll {
+            display: flex;
+            animation: infiniteScroll 25s linear infinite;
+            white-space: nowrap;
+            width: calc(200% + 32px);
+        }
+        .skills-scroll:hover {
+            animation-play-state: paused;
+        }
+        @keyframes infiniteScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* BI BX fade animation - 크기 줄임 */
+        .bi-bx-container {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            border-radius: 0.7rem;
+        }
+        .bi-bx-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .bi-bx-slide.active {
+            opacity: 1;
+        }
+        .bi-bx-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f8f9fa;
+        }
+        
+        /* Video thumbnail styles - 세로 늘림 */
+        .video-thumbnail {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-size: 20px;
+            z-index: 3;
+        }
+        .video-thumbnail:hover::before {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        /* Media title styling */
+        .media-title {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #141414);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        .media-title:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 2px 10px rgba(62, 62, 62, 0.3);
+        }
+        
+/* ETC Design Slider - 슬라이드 애니메이션 개선 */
+.etc-slider-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
 }
 
-.scroll-to-top:hover {
-  background-color: #0056b3;
+.etc-slides-wrapper {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 300%; /* 3개 슬라이드 * 100% */
 }
 
-.arrow {
-  display: inline-block;
+.etc-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 33.333%; /* 전체 너비의 1/3 */
+    flex-shrink: 0;
 }
 
-  body, html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
+.etc-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
 
+.etc-nav-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
 
-  
-  .video-container {
+.etc-nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.etc-prev {
+    left: 15px;
+}
+
+.etc-next {
+    right: 15px;
+}
+
+.etc-nav-btn i {
+    font-size: 18px;
+    color: #333;
+}
+
+/* 슬라이드 인디케이터 추가 */
+.etc-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.etc-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.etc-indicator.active {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.2);
+}
+
+.etc-indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+}        /* Skill image styles */
+        .skill-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+        
+        /* Branding design image fix */
+        .branding-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f8f9fa;
+        }
+        
+/* INSTA TOON 3D 원통 회전 슬라이더 - 센터에 있을 때만 호버 가능 */
+.toon-container {
     position: relative;
     width: 100%;
-    height: 100vh;
-  }
+    height: 600px;
+    overflow: visible;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    perspective: 1200px;
+}
 
-  video {
+.toon-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transform: rotateX(-15deg);
+}
+
+.toon-item {
     position: absolute;
+    width: 160px;
+    height: 213px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: default; /* 기본은 일반 커서 */
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+    transform-style: preserve-3d;
+}
+
+.toon-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 센터에 있는 아이템만 커서 포인터 */
+.toon-item.center {
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 센터에 있고 호버된 아이템만 커지는 효과 */
+.toon-item.center:hover:not(.selected) {
+    transform: scale(1.8) translateZ(500px) translateX(0) translateY(-100px) rotateY(0deg) rotateX(15deg) !important;
+    z-index: 500;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+/* 센터에 있고 호버된 아이템에만 글로우 효과 */
+.toon-item.center:hover:not(.selected)::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.9;
+    animation: hoverGlow 1.5s ease-in-out infinite alternate;
+}
+
+/* 센터 표시를 위한 미묘한 효과 */
+.toon-item.center::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 18px;
+    animation: centerPulse 3s ease-in-out infinite;
+}
+
+@keyframes centerPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes hoverGlow {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.02);
+        filter: blur(1px);
+    }
+}
+
+/* 선택된 툰 효과 */
+.toon-item.selected {
+    transform: scale(1.8) translateZ(600px) translateY(-150px) rotateY(0deg) !important;
+    z-index: 1000;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    border: 4px solid rgba(255, 255, 255, 0.9);
+}
+
+.toon-carousel.has-selected .toon-item:not(.selected) {
+    opacity: 0.2;
+    transform: scale(0.7) translateY(50px) !important;
+    filter: blur(2px);
+}
+
+/* 3D 원통 효과 */
+.toon-item:nth-child(1) { transform: rotateY(0deg) translateZ(280px); }
+.toon-item:nth-child(2) { transform: rotateY(40deg) translateZ(280px); }
+.toon-item:nth-child(3) { transform: rotateY(80deg) translateZ(280px); }
+.toon-item:nth-child(4) { transform: rotateY(120deg) translateZ(280px); }
+.toon-item:nth-child(5) { transform: rotateY(160deg) translateZ(280px); }
+.toon-item:nth-child(6) { transform: rotateY(200deg) translateZ(280px); }
+.toon-item:nth-child(7) { transform: rotateY(240deg) translateZ(280px); }
+.toon-item:nth-child(8) { transform: rotateY(280deg) translateZ(280px); }
+.toon-item:nth-child(9) { transform: rotateY(320deg) translateZ(280px); }
+
+.toon-carousel.rotating {
+    animation: rotate3D 15s linear infinite;
+}
+
+@keyframes rotate3D {
+    from {
+        transform: rotateX(-15deg) rotateY(0deg);
+    }
+    to {
+        transform: rotateX(-15deg) rotateY(360deg);
+    }
+}
+
+/* 센터에 있고 호버된 아이템에만 툴팁 */
+.toon-item.center:hover:not(.selected)::before {
+    content: '클릭해서 상세보기';
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    animation: tooltipFadeIn 0.3s ease-in-out 0.3s forwards;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 100;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* 나머지 CSS는 동일 */
+.toon-item.selected::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    border-radius: 25px;
+    z-index: -1;
+    opacity: 0.9;
+    animation: selectedPulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes selectedPulse {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+        filter: blur(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.05);
+        filter: blur(1px);
+    }
+}
+
+.toon-item.selected::after {
+    content: '✨';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 2rem;
+    animation: sparkle 2s ease-in-out infinite;
+    z-index: 10;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: rotate(180deg) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* 상세보기 오버레이는 동일 */
+.toon-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-  }
-
-  .first-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    max-width: 50%;
-    max-height: 50%;
-  }
-
-  .second-image {
-    position: absolute;
-    bottom: -1500px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  .next-button {
-    position: absolute;
-    bottom: -700px;
-    right: 80px;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 10;
-  }
-
-  .next-button:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-
-  .next-button::after {
-    content: '';
-    width: 20px;
-    height: 20px;
-    border-top: 2px solid white;
-    border-right: 2px solid white;
-    transform: rotate(45deg);
-  }
-
-  .text-container {
-    position: absolute;
-    margin-top: 1050px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-  }
-
-  .text-container div {
-    margin: 0 20px;
-    font-size: 24px;
-    color: rgb(0, 0, 0);
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
-  .text-container div.active {
-    color: blue;
-    font-weight: bold;
-  }
-
-  .text-container .model-title {
-    font-weight: bold;
-    font-size: 40px;
-    pointer-events: none;
-  }
-
-  .text-container div:hover {
-    text-decoration: underline;
-  }
-
-  .model-title:hover {
-    text-decoration: none;
-  }
-
-  .image-container {
-    position: relative;
-    margin: 30px;
-    max-width: 250px;
-    text-align: center;
-  }
-
-  .image-container img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-  }
-
-  .image-container .caption {
-    font-size: 18px;
-    color: #313131;
-    margin-top: 40px;
-  }
-
-  .image-gallery {
-    position: absolute;
-    bottom: -500px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    z-index: 5;
-  }
-
-  .bottom-image {
-    margin-top: 1600px;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    position: relative;
-    z-index: 2;
-  }
-
-  .bottom-image2 {
-    margin-top: 40px;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    position: relative;
-    z-index: 2;
-  }
-
-  .thumbnail-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-    margin-top: 150px;
-  }
-
-  .thumbnail {
-    width: 80px;
-    height: auto;
-    margin: 0 20px;
-    cursor: pointer;
-  }
-
-  .vertical-images {
-    display: flex;
-    justify-content: center;
-    margin-top: 80px;
-    margin-bottom: 40px;
-  }
-
-  .vertical-images img {
-    max-width: 1000px;
-    height: auto;
-    margin: 5px;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
     display: none;
-  }
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
 
-  .vertical-images img:first-child {
+.toon-overlay.active {
+    opacity: 1;
+}
+
+.toon-detail {
+    position: relative;
+    max-width: 400px;
+    max-height: 80vh;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    transform: scale(0.7) translateY(100px);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toon-overlay.active .toon-detail {
+    transform: scale(1) translateY(0);
+}
+
+.toon-detail img {
+    width: 100%;
+    height: auto;
     display: block;
-  }
-
-  .thumbnail-container, .vertical-images {
-  position: relative;
-  z-index: 1; 
 }
 
-.thumbnail-container::before {
-  margin-top: -30px;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 400%;
-  background-image: url('img/gray.png'); 
-  background-size: cover;
-  background-position: center;
-  z-index: -1; 
+.toon-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
-.slide-container {
-      margin-top: 100px;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+.toon-close:hover {
+    background: rgba(255, 0, 0, 0.8);
+    transform: rotate(90deg) scale(1.1);
+}
 
-    .slide-image {
-      position: absolute;
-      width: 100%;
-      height: 80%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+.toon-info {
+    padding: 25px;
+    text-align: center;
+}
 
-    .slide-image.active {
-      opacity: 1;
-    }
+.toon-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
 
-    .footer {
-      margin: 0 auto; 
-      margin-top: 30px;
-      max-width: 100%;
-    }
-</style>
+.toon-link-btn {
+    background: linear-gradient(45deg, #f093fb, #f5576c);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.toon-link-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(240, 147, 251, 0.5);
+    background: linear-gradient(45deg, #f5576c, #f093fb);
+}    </style>
 </head>
-<body>
-  <link rel="shortcut icon" href="img/logo/logo1.png/favicon.ico" />
-  <a href="#" class="scroll-to-top">
-    <span class="arrow">&#8593;</span>
-  </a>
-  <div class="video-container">
-    <video autoplay loop muted>
-      <source src="mp4/Maserati advertisement.mp4" type="video/mp4">
-    </video>
-    <img src="img/Maserati logo.png" alt="First Image" class="first-image">
-    <img src="img/Maserati Ghibli.png" alt="Second Image" class="second-image">
-    <a href="index2.html" class="next-button"></a>
-    <div class="text-container">
-      <div class="model-title">Model</div>
-      <div onclick="showImages('Ghibli')" class="active">Ghibli</div>
-      <div onclick="showImages('Quattroporte')">Quattroporte</div>
-      <div onclick="showImages('Levante')">Levante</div>
-      <div onclick="showImages('GranTurismo')">GranTurismo</div>
-      <div onclick="showImages('Grecale')">Grecale</div>
-      <div onclick="showImages('MC20')">MC20</div>
-      <div onclick="showImages('MC20Cielo')">MC20Cielo</div>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white bg-opacity-80 backdrop-blur-sm z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gray-800">EUNJI'S WEB PORTFOLIO</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-gray-600 hover:text-gray-800 transition-colors">ABOUT ME</a>
+                    <a href="#skills" class="text-gray-600 hover:text-gray-800 transition-colors">SKILLS</a>
+                    <a href="#portfolio" class="text-gray-600 hover:text-gray-800 transition-colors">PORTFOLIO</a>
+                    <a href="#contact" class="text-gray-600 hover:text-gray-800 transition-colors">CONTACT</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center justify-center text-white">
+        <div class="text-center px-6">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6">EUNJI'S<br>WEB PORTFOLIO</h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">창의적인 디자인과 혁신적인 아이디어로<br>사용자 경험을 향상시키는 디자이너</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#portfolio" class="bg-white text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">포트폴리오 보기</a>
+                <a href="#contact" class="border border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-colors">연락하기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h2 class="section-title text-4xl font-bold text-gray-800 mb-8">ABOUT ME</h2>
+                    <div class="w-80 h-80 mx-auto md:mx-0 mb-8 rounded-full overflow-hidden shadow-lg">
+                        <img src="나.png" alt="Profile Image" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold text-gray-800">안녕하세요, 디자이너 은지입니다.</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        사용자 중심의 디자인 철학을 바탕으로 미디어아트, 브랜딩, 그래픽 디자인 등 다양한 분야에서 활동하고 있습니다. 
+                        창의적인 아이디어와 체계적인 접근 방식을 통해 클라이언트의 비즈니스 목표를 달성하는 디자인 솔루션을 제공합니다.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        끊임없는 학습과 도전을 통해 최신 디자인 트렌드를 반영하며, 
+                        사용자 경험을 최우선으로 하는 디자인을 추구합니다.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Media Art</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">BI/BX Design</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Branding</span>
+                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">Video Production</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title text-4xl font-bold text-center text-gray-800 mb-16">SKILLS & TOOLS</h2>
+            <div class="skills-container">
+                <div class="skills-scroll">
+                    <!-- 첫 번째 세트 -->
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에이치.png" alt="HTML" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">HTML</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="씨에.png" alt="CSS" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">CSS</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="옹.png" alt="JavaScript" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">JavaScript</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="피그마.png" alt="Figma" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Figma</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="포샵.png" alt="Photoshop" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Photoshop</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="일러.png" alt="Illustrator" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Illustrator</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에펙.png" alt="After Effects" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">After Effects</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="프프.png" alt="Premiere Pro" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Premiere Pro</span>
+                    </div>
+                    <!-- 두 번째 세트 (완벽한 반복을 위해) -->
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에이치.png" alt="HTML" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">HTML</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="씨에.png" alt="CSS" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">CSS</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="옹.png" alt="JavaScript" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">JavaScript</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="피그마.png" alt="Figma" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Figma</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="포샵.png" alt="Photoshop" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Photoshop</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="일러.png" alt="Illustrator" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Illustrator</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에펙.png" alt="After Effects" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">After Effects</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="프프.png" alt="Premiere Pro" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Premiere Pro</span>
+                    </div>
+                                        <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에이치.png" alt="HTML" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">HTML</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="씨에.png" alt="CSS" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">CSS</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="옹.png" alt="JavaScript" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">JavaScript</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="피그마.png" alt="Figma" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Figma</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="포샵.png" alt="Photoshop" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Photoshop</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="일러.png" alt="Illustrator" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Illustrator</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="에펙.png" alt="After Effects" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">After Effects</span>
+                    </div>
+                    <div class="skill-icon text-center mx-8">
+                        <div class="w-16 h-16 rounded-lg mx-auto mb-3 overflow-hidden">
+                            <img src="프프.png" alt="Premiere Pro" class="skill-image">
+                        </div>
+                        <span class="text-sm text-gray-600">Premiere Pro</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title text-4xl font-bold text-center text-gray-800 mb-16">PORTFOLIO</h2>
+            
+            <!-- MEDIA Section - 세로 늘림 -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-8">MEDIA</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="portfolio-item">
+                        <div class="bg-gray-200 rounded-lg overflow-hidden video-thumbnail" onclick="window.open('https://youtu.be/5qLm_uWb5-w', '_blank')">
+                            <div class="h-80 relative">
+                                <img src="붓산.png" alt="부산영상공모전" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                                    <div class="text-white text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <h4 class="media-title text-lg font-semibold mt-4 text-center">부산에 귀 기울이다</h4>
+                                <p class="text-gray-600 text-l text-center" onclick="openDetailPage('busan')">부산영상공모전</p>
+
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="bg-gray-200 rounded-lg overflow-hidden video-thumbnail" onclick="window.open('https://youtu.be/SrB7XtQsj5Q', '_blank')">
+                            <div class="h-80 relative">
+                                <img src="흰여울띠.png" alt="다큐멘터리" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                                    <div class="text-white text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <h4 class="media-title text-lg font-semibold mt-4 text-center">흰여울의 숨겨진 시간들</h4>
+                                <p class="text-gray-600 text-l text-center" onclick="openDetailPage('busan')">다큐멘터리</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="bg-gray-200 rounded-lg overflow-hidden video-thumbnail" onclick="window.open('https://youtu.be/IgSazGep6QE?si=FD2h5DSNzV12UNNR', '_blank')">
+                            <div class="h-80 relative">
+                                <img src="모험.png" alt="단편영화" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                                    <div class="text-white text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <h4 class="media-title text-lg font-semibold mt-4 text-center">모험</h4>
+                                <p class="text-gray-600 text-l text-center" onclick="openDetailPage('busan')">단편영화</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="bg-gray-200 rounded-lg overflow-hidden video-thumbnail" onclick="window.open('https://youtu.be/aVngQej8e0M', '_blank')">
+                            <div class="h-80 relative">
+                                <img src="숲의 비밀.png" alt="미디어아트" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                                    <div class="text-white text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <h4 class="media-title text-lg font-semibold mt-4 text-center">숲의 비밀</h4>
+                                <p class="text-gray-600 text-l text-center" onclick="openDetailPage('busan')">미디어아트</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BI BX Section - 크기 줄임 -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-8">BI BX</h3>
+                <div class="bi-bx-container">
+                    <div class="bi-bx-slide active">
+                        <img src="1.png" alt="LUXMETIC - Premium Brand Identity">
+                    </div>
+                    <div class="bi-bx-slide">
+                        <img src="2.png" alt="Package Design - Face Cream & Bath Products">
+                    </div>
+                    <div class="bi-bx-slide">
+                        <img src="3.png" alt="Brand Applications - Business Cards & Stationery">
+                    </div>
+                    <div class="bi-bx-slide">
+                        <img src="4.png" alt="Marketing Materials - Posters & Advertisements">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BRANDING DESIGN Section - 클릭 링크 추가 -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-8">BRANDING DESIGN</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="portfolio-item bg-gray-200 rounded-lg overflow-hidden cursor-pointer" onclick="window.open('https://www.instagram.com/lotte_girruki/')">
+                        <div class="h-64 flex items-center justify-center bg-white">
+                            <img src="루기.png" alt="브랜드 아이덴티티" class="branding-image">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-gray-800 mb-1">캐릭터 아이덴티티</h4>
+                            <p class="text-gray-600 text-sm">브랜드 성격을 시각적으로 표현한 일러스트 디자인</p>
+                        </div>
+                    </div>
+                        <div class="portfolio-item bg-gray-200 rounded-lg overflow-hidden cursor-pointer" onclick="window.open('https://www.instagram.com/lotte_girruki/')">
+                            <div class="h-64 flex items-center justify-center bg-white">
+                                <img src="끼룩이 로고.jpg" alt="로고 디자인" class="branding-image">
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-semibold text-gray-800 mb-1">로고 시스템</h4>
+                                <p class="text-gray-600 text-sm">다양한 매체에 적용 가능한 브랜드 심볼 디자인</p>
+                            </div>
+                        </div>                    
+                        <div class="portfolio-item bg-gray-200 rounded-lg overflow-hidden cursor-pointer" onclick="window.open('https://l.instagram.com/?u=https%3A%2F%2Fxd.adobe.com%2Fview%2F48b0c7ad-6b11-47bd-86b3-38328fe27f28-1de3%2F%3Fhints%3Doff%26fbclid%3DPAZXh0bgNhZW0CMTEAAaecKYDP9xrxJdFo3tXUCdGXF6vAFXZm7PdhkeoKbe_qYhb9S2Hm5Q0t32-IXA_aem_VrDw1PTBdnabL0LUg9rPWw&e=AT0IkiyuQidaFjJGLvkVefg0V0zChgjRz6kp1Ectvhgn-2U8ZuXZ7lrv447tp-qU8d7K4So2iLNg1FUv9T9jz1RWxcQFAQ4oNE4uQpk')">
+                        <div class="h-64 flex items-center justify-center bg-white">
+                            <img src="냥.png" alt="브랜드 가이드" class="branding-image">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-gray-800 mb-1">앱 UI 디자인</h4>
+                            <p class="text-gray-600 text-sm">사용성과 일관성을 고려한 인터페이스 설계</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!-- INSTA TOON Section - 클릭 선택 기능 추가 -->
+<div class="mb-20">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-8">INSTA TOON</h3>
+    <div class="toon-container">
+        <div class="toon-carousel rotating" id="toonCarousel">
+            <div class="toon-item" data-toon="1" data-link="https://www.instagram.com/p/DIcvJucS_7s/" data-title="인스타툰 1">
+                <img src="인1.jpg" alt="인스타툰 1">
+            </div>
+            <div class="toon-item" data-toon="2" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 2">
+                <img src="인2.jpg" alt="인스타툰 2">
+            </div>
+            <div class="toon-item" data-toon="3" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 3">
+                <img src="인3.jpg" alt="인스타툰 3">
+            </div>
+            <div class="toon-item" data-toon="4" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 4">
+                <img src="인4.jpg" alt="인스타툰 4">
+            </div>
+            <div class="toon-item" data-toon="5" data-link="https://www.instagram.com/p/DJBs1F9PnKB/" data-title="인스타툰 5">
+                <img src="인5.jpg" alt="인스타툰 5">
+            </div>
+            <div class="toon-item" data-toon="6" data-link="https://www.instagram.com/p/DJTLM_TvRAt/" data-title="인스타툰 6">
+                <img src="인6.jpg" alt="인스타툰 6">
+            </div>
+            <div class="toon-item" data-toon="7" data-link="https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1" data-title="인스타툰 7">
+                <img src="인7.jpg" alt="인스타툰 7">
+            </div>
+            <div class="toon-item" data-toon="8" data-link="https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1" data-title="인스타툰 8">
+                <img src="인8.jpg" alt="인스타툰 8">
+            </div>
+            <div class="toon-item" data-toon="9" data-link="https://www.instagram.com/p/DKtS907vcwK/" data-title="인스타툰 9">
+                <img src="인9.jpg" alt="인스타툰 9">
+            </div>
+        </div>
     </div>
-    <div class="image-gallery" id="image-gallery">
-      <!-- Images for Ghibli -->
-      <div class="image-container Ghibli">
-        <img src="img/Ghibli/Ghibli1.png" alt="Ghibli image 1">
-        <div class="caption">Ghibli GT Hybrid</div>
-      </div>
-      <div class="image-container Ghibli">
-        <img src="img/Ghibli/Ghibli2.png" alt="Ghibli image 2">
-        <div class="caption">Ghibli Modena</div>
-      </div>
-      <div class="image-container Ghibli">
-        <img src="img/Ghibli/Ghibli3.png" alt="Ghibli image 3">
-        <div class="caption">Ghibli Modena S Q4</div>
-      </div>
-      <div class="image-container Ghibli">
-        <img src="img/Ghibli/Ghibli4.png" alt="Ghibli image 4">
-        <div class="caption">Ghibli Trofeo</div>
-      </div>
+</div>
 
-      <!-- Images for Quattroporte -->
-      <div class="image-container Quattroporte">
-        <img src="img/Quattroporte/Quattroporte1.png" alt="Quattroporte image 1">
-        <div class="caption">Quattroporte GT</div>
-      </div>
-      <div class="image-container Quattroporte">
-        <img src="img/Quattroporte/Quattroporte2.png" alt="Quattroporte image 2">
-        <div class="caption">Quattroporte Modena Q4</div>
-      </div>
-      <div class="image-container Quattroporte">
-        <img src="img/Quattroporte/Quattroporte3.png" alt="Quattroporte image 3">
-        <div class="caption">Quattroporte Trofeo</div>
-      </div>
-
-      <!-- Images for Levante -->
-      <div class="image-container Levante">
-        <img src="img/Levante/png/Levante1.png" alt="Levante image 1">
-        <div class="caption">Levante GT Hybrid</div>
-      </div>
-      <div class="image-container Levante">
-        <img src="img/Levante/png/Levante2.png" alt="Levante image 2">
-        <div class="caption">Levante Modena</div>
-      </div>
-      <div class="image-container Levante">
-        <img src="img/Levante/png/Levante3.png" alt="Levante image 3">
-        <div class="caption">Levante Modena So</div>
-      </div>
-      <div class="image-container Levante">
-        <img src="img/Levante/png/Levante4.png" alt="Levante image 4">
-        <div class="caption">Levante Trofeo</div>
-      </div>
-
-      <!-- Images for GranTurismo -->
-      <div class="image-container GranTurismo">
-        <img src="img/GranTurismo/png/GranTurismo1.png" alt="GranTurismo image 1">
-        <div class="caption">GranTurismo Modena</div>
-      </div>
-      <div class="image-container GranTurismo">
-        <img src="img/GranTurismo/png/GranTurismo2.png" alt="GranTurismo image 2">
-        <div class="caption">GranTurismo Trofeo</div>
-      </div>
-
-      <!-- Images for Grecale -->
-      <div class="image-container Grecale">
-        <img src="img/Grecale/png/Grecale1.png" alt="Grecale image 1">
-        <div class="caption">Grecale GT</div>
-      </div>
-      <div class="image-container Grecale">
-        <img src="img/Grecale/png/Grecale2.png" alt="Grecale image 2">
-        <div class="caption">Grecale Modena</div>
-      </div>
-      <div class="image-container Grecale">
-        <img src="img/Grecale/png/Grecale3.png" alt="Grecale image 3">
-        <div class="caption">Grecale Trofeo</div>
-      </div>
-
-      <!-- Images for MC20 -->
-      <div class="image-container MC20">
-        <img src="img/MC20/png/MC20.png" alt="MC20 image">
-        <div class="caption">MC20</div>
-      </div>
-
-      <!-- Images for MC20 Cielo -->
-      <div class="image-container MC20Cielo">
-        <img src="img/MC20Cielo/png/MC20Cielo.png" alt="MC20Cielo image">
-        <div class="caption">MC20Cielo</div>
-      </div>
+<!-- 툰 상세보기 오버레이 -->
+<div class="toon-overlay" id="toonOverlay">
+    <div class="toon-detail">
+        <button class="toon-close" onclick="closeToonDetail()">&times;</button>
+        <img id="toonDetailImage" src="" alt="">
+        <div class="toon-info">
+            <h4 class="toon-title" id="toonDetailTitle"></h4>
+            <a class="toon-link-btn" id="toonDetailLink" href="#" target="_blank">인스타그램에서 보기</a>
+        </div>
     </div>
-  </div>
-  <img src="img/PROMOTION.png" alt="Bottom Image" class="bottom-image">
-  <img src="img/NEWS.png" alt="Bottom Image2" class="bottom-image2">
+</div>
+<!-- ETC DESIGN Section - 슬라이드 효과 개선 -->
+<div class="mb-20">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-8">ETC DESIGN</h3>
+    <div class="etc-slider-container relative bg-gray-100 p-8 rounded-lg">
+        <div class="etc-slides-wrapper" id="etcSlidesWrapper">
+            <!-- Slide 1 -->
+            <div class="etc-slide">
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DIK7dj7PaYO/?img_index=1', '_blank')">
+                    <img src="뭐먹어.png" alt="기타 디자인 1" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">야구 보면서 뭐먹지?</h4>
+                    <p class="text-gray-600 text-sm text-center">사직구장 맛집 추천!</p>
+                </div>
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DIbD2Ygvb6Q/?img_index=1', '_blank')">
+                    <img src="예매 꿀팁.png" alt="기타 디자인 2" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">같은 자리인데 가격이 다르다고?</h4>
+                    <p class="text-gray-600 text-sm text-center">티켓값 아끼는 꿀팁.zip</p>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="etc-slide">
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DJOBn_gvzpW/?img_index=1', '_blank')">
+                    <img src="야구장 잡지식.png" alt="기타 디자인 3" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">알아두면 쓸데 많은</h4>
+                    <p class="text-gray-600 text-sm text-center">야구장 잡지식.zip</p>
+                </div>
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DIn1G8Bvzr5/?img_index=1', '_blank')">
+                    <img src="부산엔 야구가 있다.png" alt="기타 디자인 4" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">부산엔 야구가 있다</h4>
+                    <p class="text-gray-600 text-sm text-center">그냥 스포츠가 아닌 도시의 감정선이다.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="etc-slide">
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DJqNlhJPIor/?img_index=1', '_blank')">
+                    <img src="어떤데.png" alt="기타 디자인 5" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">과연 너는</h4>
+                    <p class="text-gray-600 text-sm text-center">어떤 야구 직관러?</p>
+                </div>
+                <div class="portfolio-item cursor-pointer" onclick="window.open('https://www.instagram.com/p/DKd2RnzStj_/?img_index=1', '_blank')">
+                    <img src="앱 소개.jpg" alt="기타 디자인 6" class="w-2/3 h-auto object-contain rounded-lg shadow-md hover:shadow-lg transition-shadow mx-auto">
+                    <h4 class="font-semibold text-gray-800 mt-4 text-center">매일 롯데 생각하는</h4>
+                    <p class="text-gray-600 text-sm text-center">너를 위한 야구 덕질 플랫폼</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation buttons -->
+        <button class="etc-nav-btn etc-prev" onclick="changeEtcSlide(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="etc-nav-btn etc-next" onclick="changeEtcSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- 슬라이드 인디케이터 -->
+        <div class="etc-indicators">
+            <div class="etc-indicator active" onclick="goToEtcSlide(0)"></div>
+            <div class="etc-indicator" onclick="goToEtcSlide(1)"></div>
+            <div class="etc-indicator" onclick="goToEtcSlide(2)"></div>
+        </div>
+    </div>
+</div>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-8 text-center">
+            <h2 class="text-4xl font-bold mb-8">CONTACT ME</h2>
+            <p class="text-xl mb-12 opacity-90">“저는 사용자를 이해하고, 의미 있는 경험을 디자인하는 사람입니다.<br>
+앞으로도 실험을 두려워하지 않고,<br>
+더 나은 콘텐츠와 브랜드를 마들기 위해 성장하겠습니다.”</p>
+            <div class="flex justify-center space-x-8 mb-12">
+                <a href="mailto:parkeunji8440@naver.com" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <i class="fas fa-envelope text-xl"></i>
+                    <span>parkeunji8440@naver.com</span>
+                </a>
+                <a href="tel:+82-10-1234-5678" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <i class="fas fa-phone text-2xl"></i>
+                    <span>010-1234-5678</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <div class="thumbnail-container">
-    <img class="thumbnail" src="img/logo/logo1.png" onclick="showVerticalImage(1)" alt="Thumbnail 1">
-    <img class="thumbnail" src="img/logo/logo2.png" onclick="showVerticalImage(2)" alt="Thumbnail 2">
-    <img class="thumbnail" src="img/logo/logo3.png" onclick="showVerticalImage(3)" alt="Thumbnail 3">
-    <img class="thumbnail" src="img/logo/logo4.png" onclick="showVerticalImage(4)" alt="Thumbnail 4">
-    <img class="thumbnail" src="img/logo/logo5.png" onclick="showVerticalImage(5)" alt="Thumbnail 5">
-    <img class="thumbnail" src="img/logo/logo6.png" onclick="showVerticalImage(6)" alt="Thumbnail 6">
-    <img class="thumbnail" src="img/logo/logo7.png" onclick="showVerticalImage(7)" alt="Thumbnail 7">
-  </div>
-  <div class="vertical-images" id="verticalImages">
-    <img src="img/color/color1.png" alt="Vertical Image 1">
-    <img src="img/color/color2.png" alt="Vertical Image 2">
-    <img src="img/color/color3.png" alt="Vertical Image 3">
-    <img src="img/color/color4.png" alt="Vertical Image 4">
-    <img src="img/color/color5.png" alt="Vertical Image 5">
-    <img src="img/color/color6.png" alt="Vertical Image 6">
-    <img src="img/color/color7.png" alt="Vertical Image 7">
-  </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 EUNJI'S WEB PORTFOLIO. All rights reserved.</p>
+        </div>
+    </footer>
 
-  <div class="slide-container">
-    <img class="slide-image active" src="img/history/history1.png" alt="Image 1">
-    <img class="slide-image" src="img/history/history2.png" alt="Image 2">
-    <img class="slide-image" src="img/history/history3.png" alt="Image 3">
-    <img class="slide-image" src="img/history/history4.png" alt="Image 4">
-    <img class="slide-image" src="img/history/history5.png" alt="Image 5">
-    <img class="slide-image" src="img/history/history6.png" alt="Image 6">
-    <img class="slide-image" src="img/history/history7.png" alt="Image 7">
-    <img class="slide-image" src="img/history/history8.png" alt="Image 8">
-    <img class="slide-image" src="img/history/history9.png" alt="Image 9">
-    <img class="slide-image" src="img/history/history10.png" alt="Image 10">
-    <img class="slide-image" src="img/history/history11.png" alt="Image 11">
-    <img class="slide-image" src="img/history/history12.png" alt="Image 11">
-  </div>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-  <div class="footer">
-    <img src="img/footer.png" class="footer">
-  </div>
-  
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white');
+                nav.classList.remove('bg-opacity-80');
+                nav.classList.add('bg-opacity-95');
+            } else {
+                nav.classList.remove('bg-opacity-95');
+                nav.classList.add('bg-opacity-80');
+            }
+        });
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      showImages('Ghibli');
+        // BI BX slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.bi-bx-slide');
+        
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(showNextSlide, 2000);
+
+// ETC Design Slider - 슬라이드 애니메이션 개선
+let currentEtcSlide = 0;
+const totalEtcSlides = 3;
+
+function changeEtcSlide(direction) {
+    const wrapper = document.getElementById('etcSlidesWrapper');
+    const indicators = document.querySelectorAll('.etc-indicator');
+    
+    // 현재 인디케이터 비활성화
+    indicators[currentEtcSlide].classList.remove('active');
+    
+    // 슬라이드 인덱스 업데이트
+    currentEtcSlide = (currentEtcSlide + direction + totalEtcSlides) % totalEtcSlides;
+    
+    // 슬라이드 이동
+    const translateX = -currentEtcSlide * 33.333; // 각 슬라이드는 33.333%씩
+    wrapper.style.transform = `translateX(${translateX}%)`;
+    
+    // 새 인디케이터 활성화
+    indicators[currentEtcSlide].classList.add('active');
+    
+    // 버튼 클릭 효과
+    const button = direction > 0 ? 
+        document.querySelector('.etc-next') : 
+        document.querySelector('.etc-prev');
+    
+    button.style.transform = 'translateY(-50%) scale(0.9)';
+    setTimeout(() => {
+        button.style.transform = 'translateY(-50%) scale(1)';
+    }, 150);
+}
+
+function goToEtcSlide(slideIndex) {
+    const wrapper = document.getElementById('etcSlidesWrapper');
+    const indicators = document.querySelectorAll('.etc-indicator');
+    
+    // 현재 인디케이터 비활성화
+    indicators[currentEtcSlide].classList.remove('active');
+    
+    // 슬라이드 인덱스 업데이트
+    currentEtcSlide = slideIndex;
+    
+    // 슬라이드 이동
+    const translateX = -currentEtcSlide * 33.333;
+    wrapper.style.transform = `translateX(${translateX}%)`;
+    
+    // 새 인디케이터 활성화
+    indicators[currentEtcSlide].classList.add('active');
+}
+
+// 키보드 네비게이션 추가
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        changeEtcSlide(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeEtcSlide(1);
+    }
+});
+
+// 터치/스와이프 지원 (모바일)
+let startX = 0;
+let endX = 0;
+
+document.querySelector('.etc-slider-container').addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+});
+
+document.querySelector('.etc-slider-container').addEventListener('touchend', function(e) {
+    endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+    
+    if (Math.abs(diff) > 50) { // 최소 50px 이동
+        if (diff > 0) {
+            changeEtcSlide(1); // 왼쪽으로 스와이프 -> 다음 슬라이드
+        } else {
+            changeEtcSlide(-1); // 오른쪽으로 스와이프 -> 이전 슬라이드
+        }
+    }
+});
+// INSTA TOON 3D 원통 회전 및 센터 감지
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('toonCarousel');
+    const toonItems = document.querySelectorAll('.toon-item');
+    const toonOverlay = document.getElementById('toonOverlay');
+    let selectedToon = null;
+    
+    // 센터에 있는 아이템 감지 및 업데이트
+    function updateCenterItem() {
+        const carouselRect = carousel.getBoundingClientRect();
+        const centerX = carouselRect.left + carouselRect.width / 2;
+        const centerY = carouselRect.top + carouselRect.height / 2;
+        
+        let closestItem = null;
+        let minDistance = Infinity;
+        
+        toonItems.forEach(item => {
+            // 선택된 아이템은 제외
+            if (item.classList.contains('selected')) return;
+            
+            const itemRect = item.getBoundingClientRect();
+            const itemCenterX = itemRect.left + itemRect.width / 2;
+            const itemCenterY = itemRect.top + itemRect.height / 2;
+            
+            const distance = Math.sqrt(
+                Math.pow(centerX - itemCenterX, 2) + 
+                Math.pow(centerY - itemCenterY, 2)
+            );
+            
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestItem = item;
+            }
+        });
+        
+        // 모든 아이템에서 center 클래스 제거
+        toonItems.forEach(item => {
+            item.classList.remove('center');
+        });
+        
+        // 가장 가까운 아이템에 center 클래스 추가 (거리 임계값 체크)
+        if (closestItem && minDistance < 150) {
+            closestItem.classList.add('center');
+        }
+    }
+    
+    // 센터 아이템만 클릭 가능하도록 이벤트 리스너 추가
+    toonItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 센터에 있는 아이템만 클릭 가능
+            if (!this.classList.contains('center')) return;
+            
+            // 기존 선택 해제
+            if (selectedToon) {
+                selectedToon.classList.remove('selected');
+            }
+            
+            // 새 선택
+            selectedToon = this;
+            this.classList.add('selected');
+            carousel.classList.add('has-selected');
+            
+            // 회전 일시정지
+            carousel.style.animationPlayState = 'paused';
+            
+            // 1초 후 상세보기 열기
+            setTimeout(() => {
+                openToonDetail(this);
+            }, 500);
+        });
     });
-
-    function showImages(model) {
-      const allImages = document.querySelectorAll('.image-gallery .image-container');
-      allImages.forEach(container => container.style.display = 'none');
-
-      const imagesToShow = document.querySelectorAll(`.image-gallery .${model}`);
-      imagesToShow.forEach(container => container.style.display = 'block');
-
-      const allModelTexts = document.querySelectorAll('.text-container div');
-      allModelTexts.forEach(text => {
-        text.classList.remove('active');
-      });
-      const selectedModelText = document.querySelector(`.text-container div[data-model="${model}"]`);
-      if (selectedModelText) {
-        selectedModelText.classList.add('active');
-      }
-
-      if (model === 'MC20 Cielo') {
-        const mc20Images = document.querySelectorAll('.image-gallery .MC20');
-        mc20Images.forEach(image => image.style.display = 'none');
-      }
+    
+    // 애니메이션 프레임마다 센터 아이템 업데이트
+    function animate() {
+        updateCenterItem();
+        requestAnimationFrame(animate);
     }
+    animate();
+    
+    // 초기 센터 아이템 설정
+    setTimeout(updateCenterItem, 100);
+});
 
-    let currentVerticalImageIndex = 0;
+function openToonDetail(toonItem) {
+    const imageSrc = toonItem.querySelector('img').src;
+    const title = toonItem.getAttribute('data-title');
+    const link = toonItem.getAttribute('data-link');
+    
+    document.getElementById('toonDetailImage').src = imageSrc;
+    document.getElementById('toonDetailTitle').textContent = title;
+    document.getElementById('toonDetailLink').href = link;
+    
+    const overlay = document.getElementById('toonOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+        overlay.classList.add('active');
+    }, 10);
+}
 
-    function showVerticalImage(index) {
-      if (currentVerticalImageIndex !== -1) {
-        document.getElementById('verticalImages').children[currentVerticalImageIndex].style.display = 'none';
-      }
+function closeToonDetail() {
+    const overlay = document.getElementById('toonOverlay');
+    const carousel = document.getElementById('toonCarousel');
+    const selectedToon = document.querySelector('.toon-item.selected');
+    
+    overlay.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        
+        // 선택 해제 및 회전 재시작
+        if (selectedToon) {
+            selectedToon.classList.remove('selected');
+        }
+        carousel.classList.remove('has-selected');
+        carousel.style.animationPlayState = 'running';
+    }, 300);
+}
 
-      document.getElementById('verticalImages').children[index - 1].style.display = 'block';
-      currentVerticalImageIndex = index - 1;
+// 오버레이 클릭 시 닫기
+document.getElementById('toonOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeToonDetail();
     }
-    const slideImages = document.querySelectorAll('.slide-image');
-    let currentIndex = 0;
-
-    function showNextSlide() {
-      slideImages[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % slideImages.length;
-      slideImages[currentIndex].classList.add('active');
-    }
-
-    setInterval(showNextSlide, 3000); 
-
-  </script>
+});</script>
 </body>
 </html>
-
-
-
