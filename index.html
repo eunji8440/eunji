@@ -260,7 +260,7 @@
             background: #f8f9fa;
         }
         
-/* INSTA TOON 3D 원통 회전 슬라이더 - 센터에 있을 때만 호버 가능 */
+/* INSTA TOON 3D 원통 회전 슬라이더 - 호버 시 그 자리에서 정지 */
 .toon-container {
     position: relative;
     width: 100%;
@@ -288,8 +288,8 @@
     height: 213px;
     border-radius: 15px;
     overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    cursor: default; /* 기본은 일반 커서 */
+    transition: all 1s ease;
+    cursor: pointer;
     box-shadow: 0 12px 35px rgba(0,0,0,0.4);
     transform-style: preserve-3d;
 }
@@ -300,85 +300,11 @@
     object-fit: cover;
 }
 
-/* 센터에 있는 아이템만 커서 포인터 */
-.toon-item.center {
-    cursor: pointer;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-}
-
-/* 센터에 있고 호버된 아이템만 커지는 효과 */
-.toon-item.center:hover:not(.selected) {
-    transform: scale(1.8) translateZ(500px) translateX(0) translateY(-100px) rotateY(0deg) rotateX(15deg) !important;
-    z-index: 500;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-    border: 3px solid rgba(255, 255, 255, 0.9);
-}
-
-/* 센터에 있고 호버된 아이템에만 글로우 효과 */
-.toon-item.center:hover:not(.selected)::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    right: -6px;
-    bottom: -6px;
-    background: linear-gradient(45deg, #4ecdc4, #45b7d1, #96ceb4, #feca57);
-    border-radius: 20px;
-    z-index: -1;
-    opacity: 0.9;
-    animation: hoverGlow 1.5s ease-in-out infinite alternate;
-}
-
-/* 센터 표시를 위한 미묘한 효과 */
-.toon-item.center::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 18px;
-    animation: centerPulse 3s ease-in-out infinite;
-}
-
-@keyframes centerPulse {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.02);
-    }
-}
-
-@keyframes hoverGlow {
-    0% {
-        opacity: 0.7;
-        transform: scale(1);
-        filter: blur(2px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1.02);
-        filter: blur(1px);
-    }
-}
-
-/* 선택된 툰 효과 */
-.toon-item.selected {
-    transform: scale(1.8) translateZ(600px) translateY(-150px) rotateY(0deg) !important;
-    z-index: 1000;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-    border: 4px solid rgba(255, 255, 255, 0.9);
-}
-
-.toon-carousel.has-selected .toon-item:not(.selected) {
-    opacity: 0.2;
-    transform: scale(0.7) translateY(50px) !important;
-    filter: blur(2px);
+/* 호버 시 해당 아이템만 살짝 커지기 (위치는 그대로) */
+.toon-item:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    z-index: 100;
 }
 
 /* 3D 원통 효과 */
@@ -396,6 +322,12 @@
     animation: rotate3D 15s linear infinite;
 }
 
+/* 개별 아이템 호버 시 회전 일시정지 */
+.toon-item:hover ~ .toon-carousel,
+.toon-carousel:has(.toon-item:hover) {
+    animation-play-state: paused;
+}
+
 @keyframes rotate3D {
     from {
         transform: rotateX(-15deg) rotateY(0deg);
@@ -404,184 +336,7 @@
         transform: rotateX(-15deg) rotateY(360deg);
     }
 }
-
-/* 센터에 있고 호버된 아이템에만 툴팁 */
-.toon-item.center:hover:not(.selected)::before {
-    content: '클릭해서 상세보기';
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    opacity: 0;
-    animation: tooltipFadeIn 0.3s ease-in-out 0.3s forwards;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 100;
-}
-
-@keyframes tooltipFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-/* 나머지 CSS는 동일 */
-.toon-item.selected::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
-    border-radius: 25px;
-    z-index: -1;
-    opacity: 0.9;
-    animation: selectedPulse 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes selectedPulse {
-    0% {
-        opacity: 0.7;
-        transform: scale(1);
-        filter: blur(3px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1.05);
-        filter: blur(1px);
-    }
-}
-
-.toon-item.selected::after {
-    content: '✨';
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    font-size: 2rem;
-    animation: sparkle 2s ease-in-out infinite;
-    z-index: 10;
-}
-
-@keyframes sparkle {
-    0%, 100% {
-        transform: rotate(0deg) scale(1);
-        opacity: 0.8;
-    }
-    50% {
-        transform: rotate(180deg) scale(1.2);
-        opacity: 1;
-    }
-}
-
-/* 상세보기 오버레이는 동일 */
-.toon-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 2000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(15px);
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.toon-overlay.active {
-    opacity: 1;
-}
-
-.toon-detail {
-    position: relative;
-    max-width: 400px;
-    max-height: 80vh;
-    background: white;
-    border-radius: 25px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-    transform: scale(0.7) translateY(100px);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.toon-overlay.active .toon-detail {
-    transform: scale(1) translateY(0);
-}
-
-.toon-detail img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.toon-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.toon-close:hover {
-    background: rgba(255, 0, 0, 0.8);
-    transform: rotate(90deg) scale(1.1);
-}
-
-.toon-info {
-    padding: 25px;
-    text-align: center;
-}
-
-.toon-title {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.toon-link-btn {
-    background: linear-gradient(45deg, #f093fb, #f5576c);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-}
-
-.toon-link-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(240, 147, 251, 0.5);
-    background: linear-gradient(45deg, #f5576c, #f093fb);
-}    </style>
+</style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
@@ -934,50 +689,38 @@
                 </div>
             </div>
 
-<!-- INSTA TOON Section - 클릭 선택 기능 추가 -->
+<!-- INSTA TOON Section - 간단한 클릭 방식 -->
 <div class="mb-20">
     <h3 class="text-2xl font-semibold text-gray-800 mb-8">INSTA TOON</h3>
     <div class="toon-container">
         <div class="toon-carousel rotating" id="toonCarousel">
-            <div class="toon-item" data-toon="1" data-link="https://www.instagram.com/p/DIcvJucS_7s/" data-title="인스타툰 1">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DIcvJucS_7s/', '_blank')">
                 <img src="img/인스타툰/인1.jpg" alt="인스타툰 1">
             </div>
-            <div class="toon-item" data-toon="2" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 2">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DIqPajhPi41/?img_index=1', '_blank')">
                 <img src="img/인스타툰/인2.jpg" alt="인스타툰 2">
             </div>
-            <div class="toon-item" data-toon="3" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 3">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DIqPajhPi41/?img_index=1', '_blank')">
                 <img src="img/인스타툰/인3.jpg" alt="인스타툰 3">
             </div>
-            <div class="toon-item" data-toon="4" data-link="https://www.instagram.com/p/DIqPajhPi41/?img_index=1" data-title="인스타툰 4">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DIqPajhPi41/?img_index=1', '_blank')">
                 <img src="img/인스타툰/인4.jpg" alt="인스타툰 4">
             </div>
-            <div class="toon-item" data-toon="5" data-link="https://www.instagram.com/p/DJBs1F9PnKB/" data-title="인스타툰 5">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DJBs1F9PnKB/', '_blank')">
                 <img src="img/인스타툰/인5.jpg" alt="인스타툰 5">
             </div>
-            <div class="toon-item" data-toon="6" data-link="https://www.instagram.com/p/DJTLM_TvRAt/" data-title="인스타툰 6">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DJTLM_TvRAt/', '_blank')">
                 <img src="img/인스타툰/인6.jpg" alt="인스타툰 6">
             </div>
-            <div class="toon-item" data-toon="7" data-link="https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1" data-title="인스타툰 7">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1', '_blank')">
                 <img src="img/인스타툰/인7.jpg" alt="인스타툰 7">
             </div>
-            <div class="toon-item" data-toon="8" data-link="https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1" data-title="인스타툰 8">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DJlhTOJv0wn/?img_index=1', '_blank')">
                 <img src="img/인스타툰/인8.jpg" alt="인스타툰 8">
             </div>
-            <div class="toon-item" data-toon="9" data-link="https://www.instagram.com/p/DKtS907vcwK/" data-title="인스타툰 9">
+            <div class="toon-item" onclick="window.open('https://www.instagram.com/p/DKtS907vcwK/', '_blank')">
                 <img src="img/인스타툰/인9.jpg" alt="인스타툰 9">
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- 툰 상세보기 오버레이 -->
-<div class="toon-overlay" id="toonOverlay">
-    <div class="toon-detail">
-        <button class="toon-close" onclick="closeToonDetail()">&times;</button>
-        <img id="toonDetailImage" src="" alt="">
-        <div class="toon-info">
-            <h4 class="toon-title" id="toonDetailTitle"></h4>
-            <a class="toon-link-btn" id="toonDetailLink" href="#" target="_blank">인스타그램에서 보기</a>
         </div>
     </div>
 </div>
@@ -1193,130 +936,22 @@ document.querySelector('.etc-slider-container').addEventListener('touchend', fun
         }
     }
 });
-// INSTA TOON 3D 원통 회전 및 센터 감지
+// INSTA TOON 3D 원통 회전 - 개별 아이템 호버 감지
 document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('toonCarousel');
     const toonItems = document.querySelectorAll('.toon-item');
-    const toonOverlay = document.getElementById('toonOverlay');
-    let selectedToon = null;
     
-    // 센터에 있는 아이템 감지 및 업데이트
-    function updateCenterItem() {
-        const carouselRect = carousel.getBoundingClientRect();
-        const centerX = carouselRect.left + carouselRect.width / 2;
-        const centerY = carouselRect.top + carouselRect.height / 2;
-        
-        let closestItem = null;
-        let minDistance = Infinity;
-        
-        toonItems.forEach(item => {
-            // 선택된 아이템은 제외
-            if (item.classList.contains('selected')) return;
-            
-            const itemRect = item.getBoundingClientRect();
-            const itemCenterX = itemRect.left + itemRect.width / 2;
-            const itemCenterY = itemRect.top + itemRect.height / 2;
-            
-            const distance = Math.sqrt(
-                Math.pow(centerX - itemCenterX, 2) + 
-                Math.pow(centerY - itemCenterY, 2)
-            );
-            
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestItem = item;
-            }
-        });
-        
-        // 모든 아이템에서 center 클래스 제거
-        toonItems.forEach(item => {
-            item.classList.remove('center');
-        });
-        
-        // 가장 가까운 아이템에 center 클래스 추가 (거리 임계값 체크)
-        if (closestItem && minDistance < 150) {
-            closestItem.classList.add('center');
-        }
-    }
-    
-    // 센터 아이템만 클릭 가능하도록 이벤트 리스너 추가
+    // 각 아이템에 호버 이벤트 추가
     toonItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.stopPropagation();
-            
-            // 센터에 있는 아이템만 클릭 가능
-            if (!this.classList.contains('center')) return;
-            
-            // 기존 선택 해제
-            if (selectedToon) {
-                selectedToon.classList.remove('selected');
-            }
-            
-            // 새 선택
-            selectedToon = this;
-            this.classList.add('selected');
-            carousel.classList.add('has-selected');
-            
-            // 회전 일시정지
+        item.addEventListener('mouseenter', function() {
             carousel.style.animationPlayState = 'paused';
-            
-            // 1초 후 상세보기 열기
-            setTimeout(() => {
-                openToonDetail(this);
-            }, 500);
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            carousel.style.animationPlayState = 'running';
         });
     });
-    
-    // 애니메이션 프레임마다 센터 아이템 업데이트
-    function animate() {
-        updateCenterItem();
-        requestAnimationFrame(animate);
-    }
-    animate();
-    
-    // 초기 센터 아이템 설정
-    setTimeout(updateCenterItem, 100);
 });
-
-function openToonDetail(toonItem) {
-    const imageSrc = toonItem.querySelector('img').src;
-    const title = toonItem.getAttribute('data-title');
-    const link = toonItem.getAttribute('data-link');
-    
-    document.getElementById('toonDetailImage').src = imageSrc;
-    document.getElementById('toonDetailTitle').textContent = title;
-    document.getElementById('toonDetailLink').href = link;
-    
-    const overlay = document.getElementById('toonOverlay');
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-        overlay.classList.add('active');
-    }, 10);
-}
-
-function closeToonDetail() {
-    const overlay = document.getElementById('toonOverlay');
-    const carousel = document.getElementById('toonCarousel');
-    const selectedToon = document.querySelector('.toon-item.selected');
-    
-    overlay.classList.remove('active');
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        
-        // 선택 해제 및 회전 재시작
-        if (selectedToon) {
-            selectedToon.classList.remove('selected');
-        }
-        carousel.classList.remove('has-selected');
-        carousel.style.animationPlayState = 'running';
-    }, 300);
-}
-
-// 오버레이 클릭 시 닫기
-document.getElementById('toonOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeToonDetail();
-    }
-});</script>
+</script>
 </body>
 </html>
